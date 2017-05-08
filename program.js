@@ -15,7 +15,7 @@ app.set('views', __dirname + '/views');
 app.engine('jsx', require('express-react-views').createEngine({ transformViews: false }));
 
 require('babel/register')({
-    ignore: false
+    //ignore: false
 });
 
 var TodoBox = require('./views/index.jsx');
@@ -34,14 +34,18 @@ var data = [
 
 app.use('/bundle.js', function(req, res) {
   res.setHeader('content-type', 'application/javascript');
-  browserify({debug:false})
-    .transform(babelify.configure({
-      presets: ["react", "es2015"],
-      compact: false
-    }))
-    .require('./app.js', {entry: true})
-    .bundle()
-    .pipe(res);
+  // browserify({debug:false})
+  //   .transform(babelify.configure({
+  //     presets: ["react", "es2015"],
+  //     compact: false
+  //   }))
+  //   .require('./app.js', {entry: true})
+  //   .bundle()
+  //   .pipe(res);
+  browserify("./app.js")
+  .transform("babelify", {presets: ["es2015", "react"]})
+  .bundle()
+  .pipe(res);
 });
 
 app.use('/', function(req, res) {
