@@ -88,3 +88,10 @@ class TodoForm extends React.Component {
         );
     }
 }
+
+
+let style = {
+    tableContent: {
+        border: "1px solid black"
+    }
+};
